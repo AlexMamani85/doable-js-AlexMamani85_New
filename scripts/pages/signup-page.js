@@ -61,8 +61,6 @@ const SignUpPage = {
   }
 }
 
-///CAMBIAR------///CAMBIAR------///CAMBIAR------///CAMBIAR------
-
 function listenLogIn(that) {
   const form =  document.querySelector(".js-login-link")
 
