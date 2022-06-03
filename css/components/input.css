@@ -20,7 +20,10 @@
   align-items: center;
   gap: 0.5em;
   background-color: white;
-  width: 100%;
+  width: 80%;
+
+
+
 }
 
 .select__input:hover {
@@ -84,11 +87,11 @@
   border: 1px solid var(--primary-300);
   outline: none;
 }
-
+/* <img src="assets/important_red.svg"> */
 .select__input {
   appearance: none;
   padding-right: 36px;
-  background-image: url("assets/icons/chevron-down.svg");
+  background-image: url("/assets/icons/down.svg");
   background-repeat: no-repeat;
   background-position-y: center;
   background-position-x: calc(100% - 8px);
@@ -107,14 +110,15 @@
 
 .radio-button,
 .checkbox {
-  display: flex;
-  gap: 8px;
+  display: inline;
+  gap: 10px;
 }
 
 .radio-button__text-container,
 .checkbox__text-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .radio-button__input,
@@ -161,7 +165,7 @@
 
 .checkbox__input:checked {
   animation: tick 250ms ease-in forwards;
-  background-color: var(--primary-300);
+  background-color: var(--primary-450);
   border: 1px solid var(--primary-300);
   background-image: url("assets/icons/check.svg");
   background-repeat: no-repeat;
@@ -205,3 +209,15 @@
 .checkbox__opt-group--horizontal {
   flex-direction: row;
 }
+
+.container--do {
+
+}
+.each--do{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+
+
