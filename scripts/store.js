@@ -1,4 +1,12 @@
 // import { getCategories } from "./services/categories-services.js"
+import { getTodos } from "./services/todos-services.js"
+
+async function fetchTodos() {
+  const toDos = await getTodos()
+  this.toDos=toDos
+
+  
+}
 
 async function fetchCategories() {
   // const categories = await getCategories()
@@ -32,7 +40,9 @@ const STORE = {
   user: null,
   income: [],
   expense: [],
+  toDos: [],
   currenTab: "expense",
+  fetchTodos,
   fetchCategories,
   currentCategories,
   deleteCategory
