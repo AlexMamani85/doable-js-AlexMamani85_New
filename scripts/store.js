@@ -1,11 +1,42 @@
 // import { getCategories } from "./services/categories-services.js"
 import { getTodos } from "./services/todos-services.js"
 
+
+
+
+
+const sortByYear = (a,b) => a["due_date"].slice(0,3) - b["due_date"].slice(0,3)
+
+const sortByTitle = (a, b) => {
+  var textA = a.title.toUpperCase();
+  var textB = b.title.toUpperCase();
+  return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+}
+
+const sortByImportant = (a, b) => {
+  var textA = a.important;
+  var textB = b.important;
+  return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+}
+
+async function fetchToDos_sorted() {
+  const toDos = await getTodos()
+  this.toDos=toDos
+
+  this.toDos_sorted = STORE.sort==0?toDos.sort(sortByTitle): 
+                  STORE.sort==1?toDos.sort(sortByYear):toDos.sort(sortByImportant);
+
+  // let a = toDos.sort(sortByTitle);  //ok ok ok 
+  // let sorted2 = toDos.sort(sortByYear) //ok ok ok 
+  // console.log(toDos.sort(sortByImportant))  //ok ok ok 
+
+}
+
 async function fetchTodos() {
   const toDos = await getTodos()
   this.toDos=toDos
 
-  
+
 }
 
 async function fetchCategories() {
@@ -41,11 +72,17 @@ const STORE = {
   income: [],
   expense: [],
   toDos: [],
+  toDos_sorted: [],
+  sort:"", //"alphabetical", "due date", "importance"
+  show:"", // "only pending", "only important"
+
   currenTab: "expense",
+  fetchToDos_sorted,
   fetchTodos,
   fetchCategories,
   currentCategories,
   deleteCategory
+
 };
 
 export default STORE;
