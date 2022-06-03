@@ -219,5 +219,12 @@
   justify-content: space-around;
 }
 
+.width-280{
+  width: 280px;
 
+}
 
+.due-date{
+  margin: 2rem;
+  color: var(--gray-480);
+}
