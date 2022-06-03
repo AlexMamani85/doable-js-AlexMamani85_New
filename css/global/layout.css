@@ -6,6 +6,18 @@
   padding: 32px;
 }
 
+
+.container-s {
+  max-width: 360px;
+  margin: auto;
+}
+
+
+.container-md {
+  max-width: 600px;
+  margin: auto;
+}
+
 .container {
   max-width: 760px;
   margin: auto;
