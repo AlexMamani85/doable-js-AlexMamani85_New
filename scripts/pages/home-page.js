@@ -5,14 +5,78 @@ import STORE from "../store.js";
 import { logout } from "../services/sessions-service.js"
 import LoginPage from "./login-page.js";
 
+function renderDo() {
+
+}
+
 function render() {
   const currenTab = STORE.currenTab
   return `
     <main class="section">
-      <section class="container">
-        <h1 class="heading heading--lg text-center mb-2">Expensable</h1>
+      <section class="container-s">
         <a class="text-center block mb-8 js-logout">Logout</a>
-        <div class="flex justify-between mb-8 js-navigation">
+
+
+
+
+
+        <div>
+          <div class=" flex justify-between">
+            <label for="optSort">Sort:</label>
+            <select  class=" select__input" name="optSort" id="cars">
+              <option value="btn-alphabetical">Alphabetical (a-z)</option>
+              <option value="btn-dueDate">Due date</option>
+              <option value="btn-mportance">Importance</option>
+            </select>
+          </div>
+          <br><br>
+
+
+          <div class="checkbox__text-container">
+            <span> Show </span>
+
+            <input class="checkbox" type="checkbox" id="cb-onlyPending" name="cb-onlyPending" value="onlyPending">
+            <label for="cb-onlyPending"> Only Pending</label><br>
+
+            <input class="checkbox" type="checkbox" id="cb-onlyPending" name="cb-onlyPending" value="onlyPending">
+            <label for="cb-onlyPending"> Only important</label><br>
+          </div>
+          <br>
+
+
+          <div class="container--do">
+
+            <div class="each--do">
+              <div>
+                <input type="checkbox" id="cb-complete" name="cb-complete" value="cbComplete">
+                <label for="cb-complete"> Complete assigments</label><br>
+              </div>  
+              <img src="assets/icons/important_red.svg">
+            </div>  
+            <br>
+
+
+          </div>
+
+          
+        
+        </div>
+
+
+
+
+        
+
+
+
+
+        
+
+
+
+
+        
+
           
         </div>
 
@@ -23,19 +87,19 @@ function render() {
   `;
 }
 
-function listenNavigation() {
-  const navigation = document.querySelector(".js-navigation")
+// function listenNavigation() {
+//   const navigation = document.querySelector(".js-navigation")
+//   console.log(navigation)
+//   navigation.addEventListener("click", event => {
+//     event.preventDefault()
+//     const { tab } = event.target.dataset
 
-  navigation.addEventListener("click", event => {
-    event.preventDefault()
-    const { tab } = event.target.dataset
+//     if(!tab) return;
 
-    if(!tab) return;
-
-    STORE.currenTab = tab;
-    DOMHandler.reload()
-  })
-}
+//     STORE.currenTab = tab;
+//     DOMHandler.reload()
+//   })
+// }
 
 function listenLogout() {
   const a = document.querySelector(".js-logout") // Capturar
@@ -58,7 +122,7 @@ const HomePage = {
     return render()
   },
   addListeners() {
-    listenNavigation();
+    // listenNavigation(this);
     listenLogout();
     // if(["expense", "income"].includes(STORE.currenTab)) Expenses.addListeners();
     // if (STORE.currenTab === "profile") Profile.addListeners();
