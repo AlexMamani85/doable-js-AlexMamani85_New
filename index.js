@@ -15,7 +15,7 @@ async function init() {
     STORE.user = user
 
     // await STORE.fetchCategories();
-    DOMHandler.load("<h1>HomePage</h1>")//HomePage
+    DOMHandler.load(HomePage)//HomePage
   } catch(error) {
     sessionStorage.removeItem(tokenKey);
     DOMHandler.load(LoginPage)//LoginPage
