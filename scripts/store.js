@@ -73,9 +73,9 @@ const STORE = {
   expense: [],
   toDos: [],
   toDos_sorted: [],
-  sort:"", //"alphabetical", "due date", "importance"
-  show:"", // "only pending", "only important"
-
+  sort:0, //"alphabetical", "due date", "importance"
+  showOnlyPending: false, // "only pending"
+  showOnlyImportant: false, // "only important"
   currenTab: "expense",
   fetchToDos_sorted,
   fetchTodos,

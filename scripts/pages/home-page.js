@@ -1,5 +1,3 @@
-// import Expenses from "../components/expenses.js";
-// import Profile from "../components/profile.js";
 import DOMHandler from "../dom-handler.js";
 import STORE from "../store.js";
 import { logout } from "../services/sessions-service.js"
@@ -31,7 +29,7 @@ function renderDo(toDos) {
 function render() {
   const currenTab = STORE.currenTab
 
-  return `
+  return `  
     <main class="section">
       <section class="container-s">
         <a class="text-center block mb-8 js-logout">Logout</a>
@@ -40,9 +38,9 @@ function render() {
           <div class=" flex justify-between">
             <label for="optSort">Sort:</label>
             <select  class=" select__input" name="optSort" id="cars">
-              <option value="btn-alphabetical" ${STORE.sort==0?"selected":""}>Alphabetical (a-z)</option>
-              <option value="btn-dueDate" ${STORE.sort==1?"selected":""}>Due date</option>
-              <option value="btn-mportance" ${STORE.sort==2?"selected":""}>Importance</option>
+              <option value="opt-alphabetical" ${STORE.sort==0?"selected":""}>Alphabetical (a-z)</option>
+              <option value="opt-dueDate" ${STORE.sort==1?"selected":""}>Due date</option>
+              <option value="opt-mportance" ${STORE.sort==2?"selected":""}>Importance</option>
             </select>
           </div>
           <br><br>
@@ -50,10 +48,12 @@ function render() {
           <div class="checkbox__text-container">
             <span> Show </span>
 
-            <input class="checkbox" type="checkbox" id="cb-onlyPending" name="cb-onlyPending" value="onlyPending">
+            <input class="checkbox" type="checkbox" id="cb-onlyPending" name="cb-onlyPending" value="onlyPending" 
+            ${STORE.showOnlyPending?"checked":""}>
             <label for="cb-onlyPending"> Only Pending</label><br>
 
-            <input class="checkbox" type="checkbox" id="cb-onlyImportant" name="cb-onlyImportant" value="onlyImportant">
+            <input class="checkbox" type="checkbox" id="cb-onlyImportant" name="cb-onlyImportant" value="onlyImportant"
+            ${STORE.showOnlyImportant?"checked":""}>
             <label for="cb-onlyImportant"> Only important</label><br>
           </div>
           <br>
@@ -67,45 +67,35 @@ function render() {
               </div>  
               <img src="assets/icons/important_red.svg">
             </div>  
-            
-            ${STORE.toDos_sorted?renderDo(STORE.toDos):renderDo(STORE.toDos_sorted)}
 
-            ${STORE.sort==0?renderDo(STORE.toDos_sorted):"sorpresa"}
+${STORE.showOnlyPending&&STORE.showOnlyImportant?renderDo(STORE.toDos_sorted.filter((x)=>x.completed==false).filter((x)=>x.important==true)):
+  STORE.showOnlyImportant?renderDo(STORE.toDos_sorted.filter((x)=>x.important==true)):
+  STORE.showOnlyPending?renderDo(STORE.toDos_sorted.filter((x)=>x.completed==false)):
+  renderDo(STORE.toDos_sorted)
+          
+          }
+              
 
           </div>
-
         </div>
-        
         </div>
       </section>
     </main>
   `;
 }
 
-// function listenNavigation() {
-//   const navigation = document.querySelector(".js-navigation")
-//   console.log(navigation)
-//   navigation.addEventListener("click", event => {
-//     event.preventDefault()
-//     const { tab } = event.target.dataset
 
-//     if(!tab) return;
 
-//     STORE.currenTab = tab;
-//     DOMHandler.reload()
-//   })
-// }
+
+
 
 function listenSelect() {
-  const a = document.querySelector(".select__input") // Capturar
-  // Agregar evento
+  const a = document.querySelector(".select__input") 
   a.addEventListener("click", async (event) => {
-    // =>> que hago con esto?
     event.preventDefault();
-    console.dir(event.path[0].options.selectedIndex)
     STORE.sort=+event.path[0].options.selectedIndex
     await STORE.fetchToDos_sorted()
-    console.log(STORE.toDos_sorted)
+
     try {
       DOMHandler.reload(this);
     } catch (error) {
@@ -114,14 +104,44 @@ function listenSelect() {
   })
 }
 
+function listenOnlyPending() {
+  const a = document.querySelector("#cb-onlyPending") 
+  a.addEventListener("click", async (event) => {
+
+    STORE.showOnlyPending=!STORE.showOnlyPending
+    event.path[0].ownerDocument.activeElement.checked=!event.path[0].ownerDocument.activeElement.checked
+    // STORE.sort=+event.path[0].options.selectedIndex
+    await STORE.fetchToDos_sorted()
+    try {
+
+      DOMHandler.reload(this);
+
+    } catch (error) {
+      console.log(error.message);
+    }
+  })
+}
+
+function listenOnlyImportant() {
+  const a = document.querySelector("#cb-onlyImportant") 
+  a.addEventListener("click", async (event) => {
+    STORE.showOnlyImportant=!STORE.showOnlyImportant
+
+    await STORE.fetchToDos_sorted()
+
+    try {
+      DOMHandler.reload(this);
+    } catch (error) {
+      console.log(error.message);
+    }
+  })
+}
 
 function listenLogout() {
-  const a = document.querySelector(".js-logout") // Capturar
-  // Agregar evento
+  const a = document.querySelector(".js-logout")
   a.addEventListener("click", async (event) => {
-    // =>> que hago con esto?
     event.preventDefault();
-
+    
     try {
       await logout();
       DOMHandler.load(LoginPage);
@@ -136,23 +156,13 @@ const HomePage = {
     return render()
   },
   addListeners() {
-    // listenNavigation(this);
     listenLogout();
     listenSelect();
+    listenOnlyPending();
+    listenOnlyImportant();
 
-    // if(["expense", "income"].includes(STORE.currenTab)) Expenses.addListeners();
-    // if (STORE.currenTab === "profile") Profile.addListeners();
   }
 }
 
 export default HomePage;
 
-
-// <a class="button button--subtle ${ currenTab === "expense" ? "activeTab" : ""}" data-tab="expense">Expense</a>
-//           <a class="button button--subtle ${ currenTab === "income" ? "activeTab" : ""}" data-tab="income">Income</a>
-//           <a class="button button--subtle ${ currenTab === "profile" ? "activeTab" : ""}" data-tab="profile">Profile</a>
-
-
-//           ${currenTab === "expense" ? Expenses : ""}
-//           ${currenTab === "income" ? Expenses : ""}
-//           ${currenTab === "profile" ? Profile : ""}
