@@ -30,9 +30,12 @@ function render() {
   const currenTab = STORE.currenTab
 
   return `  
+    <header>
+      <a class="text-center block mb-8 js-logout">Logout</a>
+    </header>
     <main class="section">
-      <section class="container-s">
-        <a class="text-center block mb-8 js-logout">Logout</a>
+      <section class="container-s height-600">
+
 
         <div>
           <div class=" flex justify-between">
@@ -79,6 +82,7 @@ ${STORE.showOnlyPending&&STORE.showOnlyImportant?renderDo(STORE.toDos_sorted.fil
           </div>
         </div>
         </div>
+
       </section>
     </main>
   `;
