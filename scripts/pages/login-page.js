@@ -72,17 +72,10 @@ function listenSignUp(that) {
 
     try {
       event.preventDefault();
-  
-
-      // console.log(STORE)
-
 
       DOMHandler.load(SignUpPage)
     } catch (error) {
       
-      // console.dir(error.message)  
-      // console.dir(this.state)  
-      // console.dir(that)  
       that.state.loginError = error.message
       LoginPage.state.loginError = error.message
       DOMHandler.reload()
@@ -109,15 +102,12 @@ function listenSubmitForm(that) {
   
       const user = await login(credentials)
       STORE.user = user
-      // console.log(STORE)
 
-      await STORE.fetchTodos()
+      await STORE.fetchToDos_sorted()
       DOMHandler.load(HomePage)
     } catch (error) {
       
-      // console.dir(error.message)  
-      // console.dir(this.state)  
-      // console.dir(that)  
+
       that.state.loginError = error.message
       LoginPage.state.loginError = error.message
       DOMHandler.reload()
