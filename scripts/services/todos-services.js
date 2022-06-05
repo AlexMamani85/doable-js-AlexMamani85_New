@@ -1,17 +1,14 @@
 import apiFetch from "./api-fetch.js";
 
-export function getCategories() {
-  return apiFetch("categories")
-}
 
 export function getTodos() {
   return apiFetch("tasks")
 }
 
-export function createCategory(newCategory = { name, transaction_type }){
-  return apiFetch("categories", { body: newCategory })
+export function createTodo(valuesTodo) {
+  return apiFetch("tasks", { body: valuesTodo })
 }
 
-export function deleteCategory(id) {
-  return apiFetch("categories/" + id, { method: "DELETE" });
+export function updateTodo(id,valuesTodo) {
+  return apiFetch("tasks/"+id, { method: "PATCH", body: valuesTodo })
 }
